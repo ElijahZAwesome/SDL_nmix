@@ -6,6 +6,22 @@
 #include <SDL_sound.h>
 #include "SDL_nmix.h"
 
+#ifndef NMIX_API
+#if defined NMIX_STATIC
+#define NMIX_API
+#elif defined(_WIN32)
+#define NMIX_API __declspec(dllimport)
+#else
+#define NMIX_API extern
+#endif
+#endif
+
+#if defined(_WIN32)
+#define NMIX_APIENTRY __cdecl
+#else
+#define NMIX_APIENTRY
+#endif
+
 /**
  * \struct NMIX_FileSource
  * \brief Represents a source that is decoded from a file.
@@ -51,7 +67,7 @@ typedef struct NMIX_FileSource {
  * \sa NMIX_Rewind
  * \sa NMIX_SetLoop
  */
-NMIX_FileSource* NMIX_NewFileSource(
+NMIX_API NMIX_FileSource* NMIX_APIENTRY NMIX_NewFileSource(
     SDL_RWops* rw, const char* ext, SDL_bool predecode);
 
 /**
@@ -62,7 +78,7 @@ NMIX_FileSource* NMIX_NewFileSource(
  *   \return the duration in milliseconds, -1 on error. You can retrieve
  *           the error message with a call to SDL_GetError()
  */
-Sint32 NMIX_GetDuration(NMIX_FileSource* s);
+NMIX_API Sint32 NMIX_APIENTRY NMIX_GetDuration(NMIX_FileSource* s);
 
 /**
  * \fn int NMIX_Seek(NMIX_FileSource* s, int ms)
@@ -73,7 +89,7 @@ Sint32 NMIX_GetDuration(NMIX_FileSource* s);
  *   \return zero on success, -1 on error. You can retrieve the error message
  *           with a call to SDL_GetError()
  */
-int NMIX_Seek(NMIX_FileSource* s, int ms);
+NMIX_API int NMIX_APIENTRY NMIX_Seek(NMIX_FileSource* s, int ms);
 
 /**
  * \fn int NMIX_Rewind(NMIX_FileSource* s)
@@ -83,7 +99,7 @@ int NMIX_Seek(NMIX_FileSource* s, int ms);
  *   \return zero on success, -1 on error. You can retrieve the error message
  *           with a call to SDL_GetError()
  */
-int NMIX_Rewind(NMIX_FileSource* s);
+NMIX_API int NMIX_APIENTRY NMIX_Rewind(NMIX_FileSource* s);
 
 /**
  * \fn SDL_bool NMIX_GetLoop(NMIX_FileSource* s)
@@ -94,7 +110,7 @@ int NMIX_Rewind(NMIX_FileSource* s);
  *
  * \sa NMIX_SetLoop
  */
-SDL_bool NMIX_GetLoop(NMIX_FileSource* s);
+NMIX_API SDL_bool NMIX_APIENTRY NMIX_GetLoop(NMIX_FileSource* s);
 
 /**
  * \fn void NMIX_SetLoop(NMIX_FileSource* s, SDL_bool loop_on)
@@ -105,7 +121,7 @@ SDL_bool NMIX_GetLoop(NMIX_FileSource* s);
  *
  * \sa NMIX_GetLoop
  */
-void NMIX_SetLoop(NMIX_FileSource* s, SDL_bool loop_on);
+NMIX_API void NMIX_APIENTRY NMIX_SetLoop(NMIX_FileSource* s, SDL_bool loop_on);
 
 /**
  * \fn void NMIX_FreeFileSource(NMIX_FileSource* s)
@@ -117,6 +133,6 @@ void NMIX_SetLoop(NMIX_FileSource* s, SDL_bool loop_on);
  *
  * \sa NMIX_NewFileSource
  */
-void NMIX_FreeFileSource(NMIX_FileSource* s);
+NMIX_API void NMIX_APIENTRY NMIX_FreeFileSource(NMIX_FileSource* s);
 
 #endif // SDL_NMIX_FILE_H

@@ -57,6 +57,22 @@
   NULL /**< The default audio device to use (NULL \
             requests the most reasonable default). */
 
+#ifndef NMIX_API
+ #if defined NMIX_STATIC
+  #define NMIX_API
+ #elif defined(_WIN32)
+  #define NMIX_API __declspec(dllimport)
+ #else
+  #define NMIX_API extern
+ #endif
+#endif
+
+#if defined(_WIN32)
+ #define NMIX_APIENTRY __cdecl
+#else
+ #define NMIX_APIENTRY
+#endif
+
 /**
  *  This macro returns the number of bytes per sample for a given
  *  SDL_AudioFormat.
@@ -134,7 +150,7 @@ typedef struct NMIX_Source {
  *
  * \sa NMIX_CloseAudio
  */
-int NMIX_OpenAudio(const char* device, int rate, int samples);
+NMIX_API int NMIX_APIENTRY NMIX_OpenAudio(const char* device, int rate, int samples);
 
 /**
  * \fn int NMIX_CloseAudio()
@@ -148,7 +164,7 @@ int NMIX_OpenAudio(const char* device, int rate, int samples);
  *
  * \sa NMIX_OpenAudio
  */
-int NMIX_CloseAudio();
+NMIX_API int NMIX_APIENTRY NMIX_CloseAudio();
 
 /**
  * \fn void NMIX_PausePlayback(SDL_bool pause_on)
@@ -159,7 +175,7 @@ int NMIX_CloseAudio();
  *
  *    \param pause_on Whether the playback should be paused or not.
  */
-void NMIX_PausePlayback(SDL_bool pause_on);
+NMIX_API void NMIX_APIENTRY NMIX_PausePlayback(SDL_bool pause_on);
 
 /**
  * \fn float NMIX_GetMasterGain()
@@ -171,7 +187,7 @@ void NMIX_PausePlayback(SDL_bool pause_on);
  *
  * \sa NMIX_SetMasterGain
  */
-float NMIX_GetMasterGain();
+NMIX_API float NMIX_APIENTRY NMIX_GetMasterGain();
 
 /**
  * \fn void NMIX_SetMasterGain(float gain)
@@ -184,7 +200,7 @@ float NMIX_GetMasterGain();
  *
  * \sa NMIX_GetMasterGain
  */
-void NMIX_SetMasterGain(float gain);
+NMIX_API void NMIX_APIENTRY NMIX_SetMasterGain(float gain);
 
 /**
  * \fn SDL_AudioSpec* NMIX_GetAudioSpec()
@@ -193,7 +209,7 @@ void NMIX_SetMasterGain(float gain);
  *   \return The audio spec
  *
  */
-SDL_AudioSpec* NMIX_GetAudioSpec();
+NMIX_API SDL_AudioSpec* NMIX_APIENTRY NMIX_GetAudioSpec();
 
 /**
  * \fn SDL_AudioDeviceID NMIX_GetAudioDevice()
@@ -202,7 +218,7 @@ SDL_AudioSpec* NMIX_GetAudioSpec();
  *   \return The audio device id
  *
  */
-SDL_AudioDeviceID NMIX_GetAudioDevice();
+NMIX_API SDL_AudioDeviceID NMIX_APIENTRY NMIX_GetAudioDevice();
 
 /**
  * \fn NMIX_Source* NMIX_NewSource(SDL_AudioFormat format, Uint8 channels,
@@ -247,7 +263,8 @@ SDL_AudioDeviceID NMIX_GetAudioDevice();
  * \sa NMIX_SourceCallback
  * \sa NMIX_FreeSource
  */
-NMIX_Source* NMIX_NewSource(SDL_AudioFormat format, Uint8 channels, int rate,
+NMIX_API NMIX_Source* NMIX_APIENTRY NMIX_NewSource(SDL_AudioFormat format,
+    Uint8 channels, int rate,
     NMIX_SourceCallback callback, void* userdata);
 
 /**
@@ -261,7 +278,7 @@ NMIX_Source* NMIX_NewSource(SDL_AudioFormat format, Uint8 channels, int rate,
  *
  * \sa NMIX_NewSource
  */
-void NMIX_FreeSource(NMIX_Source* source);
+NMIX_API void NMIX_APIENTRY NMIX_FreeSource(NMIX_Source* source);
 
 /**
  * \fn int NMIX_Play(NMIX_Source* source)
@@ -275,7 +292,7 @@ void NMIX_FreeSource(NMIX_Source* source);
  *
  * \sa NMIX_Pause
  */
-int NMIX_Play(NMIX_Source* source);
+NMIX_API int NMIX_APIENTRY NMIX_Play(NMIX_Source* source);
 
 /**
  * \fn void NMIX_Pause(NMIX_Source* source)
@@ -287,7 +304,7 @@ int NMIX_Play(NMIX_Source* source);
  *
  * \sa NMIX_Play
  */
-void NMIX_Pause(NMIX_Source* source);
+NMIX_API void NMIX_APIENTRY NMIX_Pause(NMIX_Source* source);
 
 /**
  * \fn SDL_bool NMIX_IsPlaying(NMIX_Source* source)
@@ -298,7 +315,7 @@ void NMIX_Pause(NMIX_Source* source);
  *
  * \sa NMIX_Play
  */
-SDL_bool NMIX_IsPlaying(NMIX_Source* source);
+NMIX_API SDL_bool NMIX_APIENTRY NMIX_IsPlaying(NMIX_Source* source);
 
 /**
  * \fn float NMIX_GetPan(NMIX_Source* source)
@@ -311,7 +328,7 @@ SDL_bool NMIX_IsPlaying(NMIX_Source* source);
  *
  * \sa NMIX_SetPan
  */
-float NMIX_GetPan(NMIX_Source* source);
+NMIX_API float NMIX_APIENTRY NMIX_GetPan(NMIX_Source* source);
 
 /**
  * \fn void NMIX_SetPan(NMIX_Source* source, float pan)
@@ -325,7 +342,7 @@ float NMIX_GetPan(NMIX_Source* source);
  *
  * \sa NMIX_GetPan
  */
-void NMIX_SetPan(NMIX_Source* source, float pan);
+NMIX_API void NMIX_APIENTRY NMIX_SetPan(NMIX_Source* source, float pan);
 
 /**
  * \fn float NMIX_GetGain(NMIX_Source* source)
@@ -338,7 +355,7 @@ void NMIX_SetPan(NMIX_Source* source, float pan);
  *
  * \sa NMIX_SetGain
  */
-float NMIX_GetGain(NMIX_Source* source);
+NMIX_API float NMIX_APIENTRY NMIX_GetGain(NMIX_Source* source);
 
 /**
  * \fn void NMIX_SetGain(NMIX_Source* source, float gain)
@@ -351,6 +368,6 @@ float NMIX_GetGain(NMIX_Source* source);
  *
  * \sa NMIX_GetGain
  */
-void NMIX_SetGain(NMIX_Source* source, float gain);
+NMIX_API void NMIX_APIENTRY NMIX_SetGain(NMIX_Source* source, float gain);
 
 #endif // SDL_NMIX_H
