@@ -25,9 +25,10 @@ jobs:
       run: cmake -E make_directory ${{github.workspace}}/SDL_sound/build
     
     - name: Download SDL2
+      working-directory: ${{github.workspace}}/SDL_sound
       run: |
-        curl https://www.libsdl.org/release/SDL2-devel-2.0.14-VC.zip -o ${{github.workspace}}/SDL_sound/SDL2.zip
-        7z x ${{github.workspace}}/SDL_sound/SDL2.zip && ren ${{github.workspace}}/SDL_sound/SDL2-2.0.14 ${{github.workspace}}/SDL_sound/SDL2
+        curl https://www.libsdl.org/release/SDL2-devel-2.0.14-VC.zip -o SDL2.zip
+        7z x SDL2.zip && ren SDL2-2.0.14 SDL2
 
     - name: Configure CMake
       # Use a bash shell so we can use the same syntax for environment variable
