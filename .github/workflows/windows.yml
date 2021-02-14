@@ -15,6 +15,7 @@ jobs:
     steps:
     - name: Checkout SDL_sound repository
       uses: actions/checkout@v2
+      with:
         repository: 'ElijahZAwesome/SDL_sound'
     
     - name: Download SDL2
