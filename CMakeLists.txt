@@ -20,6 +20,9 @@ if(WIN32)
 endif(WIN32)
 
 find_package(SDL2 REQUIRED)
+include_directories(${SDL2_INCLUDE_DIRS})
+include_directories(${SDL2_INCLUDE_DIR})
+link_libraries(${SDL2MAIN_LIBRARY} ${SDL2_LIBRARY})
 
 option(NMIX_BUILD_STATIC "Build static library" FALSE)
 option(NMIX_BUILD_SHARED "Build shared library" TRUE)
