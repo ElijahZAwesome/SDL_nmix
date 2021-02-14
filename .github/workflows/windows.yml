@@ -7,13 +7,15 @@ env:
   BUILD_TYPE: Release
 
 jobs:
-  sdl_sound:
-    name: Install SDL_sound
+  build:
+    name: Build On Windows
+    # Matrix config for all supported platforms
     runs-on: windows-latest
 
     steps:
-    - name: Checkout repository
+    - name: Checkout SDL_sound repository
       uses: actions/checkout@v2
+        repository: 'ElijahZAwesome/SDL_sound'
     
     - name: Download SDL2
       run: |
@@ -35,17 +37,13 @@ jobs:
       # The CMake binaries on the Github Actions machines are (as of this writing) 3.12
       run: cmake -A x64 $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DCMAKE_INSTALL_PREFIX=../SDL2 .
 
-    - name: Build
+    - name: Build / Install SDL_sound
       working-directory: ${{github.workspace}}/build
       shell: bash
       # Execute the build.  You can specify a specific target with "--target <NAME>"
       run: cmake --build . --config $BUILD_TYPE --target install
-  build:
-    name: Build On Windows
-    # Matrix config for all supported platforms
-    runs-on: windows-latest
-
-    steps:
+    
+    # Actually build
     - name: Checkout repository
       uses: actions/checkout@v2
     
