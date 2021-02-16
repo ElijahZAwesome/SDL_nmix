@@ -68,7 +68,7 @@ jobs:
       # Note the current convention is to use the -S and -B options here to specify source 
       # and build directories, but this is only available with CMake 3.13 and higher.  
       # The CMake binaries on the Github Actions machines are (as of this writing) 3.12
-      run: cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DCMAKE_INSTALL_PREFIX="${{github.workspace}}/SDL2" -DSOUND_LIBRARY="${{github.workspace}}/SDL_sound/build/SDL2_sound.dll" -DSOUND_INCLUDE_DIR="${{github.workspace}}/SDL_sound" -DNMIX_BUILD_SHARED=ON -DNMIX_BUILD_STATIC=ON ..
+      run: cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DCMAKE_INSTALL_PREFIX="${{github.workspace}}/SDL2" -DSOUND_LIBRARY="${{github.workspace}}/SDL_sound/build" -DSOUND_INCLUDE_DIR="${{github.workspace}}/SDL_sound/src" -DNMIX_BUILD_SHARED=ON -DNMIX_BUILD_STATIC=ON ..
 
     - name: Build
       working-directory: ${{github.workspace}}/build
