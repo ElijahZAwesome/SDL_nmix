@@ -6,13 +6,13 @@ set(LIBRARY_OUTPUT_NAME "SDL2_nmix")
 set(OUTPUT_DIR "SDL2_nmix")
 
 set(NMIX_HDRS
-    sdl_nmix.h
-    sdl_nmix_file.h
+    SDL_nmix.h
+    SDL_nmix_file.h
 )
 
 set(NMIX_SRCS
-    sdl_nmix.c
-    sdl_nmix_file.c
+    SDL_nmix.c
+    SDL_nmix_file.c
 )
 
 if(WIN32)
