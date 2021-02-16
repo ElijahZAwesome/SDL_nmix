@@ -25,10 +25,10 @@ include_directories(${SDL2_INCLUDE_DIR})
 link_libraries(${SDL2MAIN_LIBRARY} ${SDL2_LIBRARY})
 
 if(DEFINED SOUND_LIBRARY)
-    link_libraries(${SOUND_LIBRARY})
+    link_libraries(${SOUND_LIBRARY} SYSTEM)
 endif()
 if(DEFINED SOUND_INCLUDE_DIR)
-    include_directories(${SOUND_INCLUDE_DIR})
+    include_directories(${SOUND_INCLUDE_DIR} SYSTEM)
 endif()
 
 option(NMIX_BUILD_STATIC "Build static library" FALSE)
